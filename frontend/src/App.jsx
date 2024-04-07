@@ -17,17 +17,18 @@ import JobApplicationForm from './components/JobApplicationForm';
 
 
 function App() {
-  const [jobs,setJobs] = useState([]);
+
+  const [jobs, setJobs] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:5000/jobs')
-    .then(response =>{
-      setJobs(response.data);
-    })
-    .catch(error =>{
-      console.log("there is an error", error)
-    })
-  },[]);
+    axios.get('http://localhost:5001/jobs')
+      .then(response => {
+        setJobs(response.data);
+      })
+      .catch(error => {
+        console.error('Error fetching jobs:', error);
+      });
+  }, []);
  
  return (
     <Router>

@@ -1,5 +1,4 @@
 import express from 'express';
-import mongoose from 'mongoose';
 import cors from 'cors';
 
 // Initialize Express
@@ -9,23 +8,6 @@ const app = express();
 app.use(express.json()); // for parsing application/json
 app.use(cors()); // Enable CORS
 
-// Connect to MongoDB
-const uri = 'mongodb+srv://kamsuvenu2004:Mongodb123@cluster0.zluijik.mongodb.net/?retryWrites=true&w=majority'; // Replace with your MongoDB URI
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
- .then(() => console.log('MongoDB Connected...'))
- .catch(err => console.error('Error connecting to MongoDB:', err));
-
-// Define a simple schema for job listings
-const jobSchema = new mongoose.Schema({
- id: Number,
- title: String,
- deadline: Date,
- status: String,
- description: String,
-});
-
-// Create a model from the schema
-const Job = mongoose.model('Job', jobSchema);
 
 const jobs = [
     {
@@ -55,20 +37,22 @@ const jobs = [
     // Add more jobs as needed
   ];
 
-// Insert jobs into the database
-mongoose.connection.once('open', () => {
- Job.insertMany(jobs)
-    .then(jobs => console.log('Jobs inserted:', jobs))
-    .catch(err => console.error('Error inserting jobs:', err));
-});
 
 // Sample route to fetch all jobs
 app.get('/jobs', (req, res) => {
- Job.find()
-    .then(jobs => res.json(jobs))
-    .catch(err => res.status(400).json('Error: ' + err));
+ res.json(jobs);
 });
 
+app.get('/jobs/:id', (req, res) => {
+  const jobId = parseInt(req.params.id);
+  const job = jobs.find(job => job.id === jobId);
+  if (!job) {
+    return res.status(404).json({ error: 'Job not found' });
+  }
+   res.json(job);
+});
 // Start the server
-const port = 5000;
-app.listen(port, () => console.log(`Server running on port ${port}`));
+const port = 5001;
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
