@@ -1,0 +1,40 @@
+/* src/style.css */
+body {
+  font-family: Arial, sans-serif;
+ }
+ 
+ .header {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+ }
+ 
+ .filter {
+  margin-top: 20px;
+ }
+ 
+ .job {
+  margin-top: 20px;
+ }
+ 
+ .detaills {
+  display: flex;
+  align-items: center;
+ }
+ 
+ .logo {
+  width: 50px;
+  height: 50px;
+  margin-right: 20px;
+ }
+ 
+ .description {
+  flex-grow: 1;
+ }
+ 
+ .apply {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+ }
+ 
