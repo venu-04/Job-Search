@@ -6,7 +6,7 @@ function Job({job}) {
     const navigate = useNavigate();
 
  const handlebutton = () => {
-    navigate('/Jobdetails')
+    navigate(`/Jobdetails/${job.id}`)
  };
   
   return (
