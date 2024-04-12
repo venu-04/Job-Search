@@ -18,7 +18,7 @@ function Jobdetails({ jobs }) {
   }
 
   const handleApply = () => {
-    navigate('/JobApplicationForm');
+    navigate('/JobApplicationForm',{state:{ job:job}});
   };
 
   return (

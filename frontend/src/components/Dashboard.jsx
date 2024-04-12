@@ -1,4 +1,18 @@
+import { useEffect, useState } from "react";
+import  axios from 'axios';
+import { useLocation } from 'react-router-dom';
+
 function Dashboard() {
+
+  const location = useLocation();
+  const [appliedJobs , setAppliedJobs] = useState([]);
+  const { jobTitle } = location.state || {};
+
+  useEffect(() => {
+    if (jobTitle) {
+      setAppliedJobs(prevJobs => [...prevJobs, jobTitle]);
+    }
+  }, [jobTitle]);
     return (
        <div className="flex flex-wrap justify-center items-start gap-4 p-4">
          <div className="bg-white rounded-lg shadow-md w-64">
@@ -14,9 +28,14 @@ function Dashboard() {
            <h2 className="text-xl font-bold p-4">Applied</h2>
            {/* List of applied jobs */}
            <ul className="divide-y divide-gray-200">
-             <li className="p-4 hover:bg-gray-100 transition-colors duration-200">Job Title 3</li>
-             <li className="p-4 hover:bg-gray-100 transition-colors duration-200">Job Title 4</li>
-             {/* Add more jobs as needed */}
+            {
+              appliedJobs.map((job,index) => (
+                <li  key={index} className="p-4 hover:bg-gray-100 transition-colors duration-200">{job}</li>
+
+              ))
+            }
+            
+           
            </ul>
          </div>
          <div className="bg-white rounded-lg shadow-md w-64">

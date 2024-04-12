@@ -1,17 +1,38 @@
+import  axios  from 'axios';
 import  { useState } from 'react';
-import {useNavigate} from 'react-router-dom';
+import {useNavigate,useParams,useLocation} from 'react-router-dom';
+import { useEffect } from 'react';
 
 function JobApplicationForm() {
   const navigate = useNavigate();
+  const location = useLocation();
  const [email, setEmail] = useState('');
  const [mobileNumber, setMobileNumber] = useState('');
  const [resume, setResume] = useState(null);
+ const job  = location.state.job;
+//  const [job,setJob] = useState(null);
+//  const { jobId } = useParams();
 
- const handleSubmit = (event) => {
+
+ const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission logic here
-    console.log({ email, mobileNumber, resume });
-    navigate('/applied');
+  
+
+    try {
+      // Send form data to the backend server
+      await axios.post('http://localhost:5001/job-application', {email,mobileNumber,resume,job});
+
+      // Navigate to the dashboard page with the job title as a query parameter
+      navigate('/dashboard',{state:{jobTitle:job.title}});
+
+      // Display success message
+      alert('Job application submitted successfully');
+      console.log(email,mobileNumber,resume,job);
+    } catch (error) {
+      // Display error message if request fails
+      console.error('Error submitting job application:', error);
+      alert('Failed to submit job application. Please try again later.');
+    }
 
  };
 

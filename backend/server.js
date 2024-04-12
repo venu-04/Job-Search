@@ -3,11 +3,44 @@ import cors from 'cors';
 
 // Initialize Express
 const app = express();
+const router = express.Router();
 
 // Middleware
 app.use(express.json()); // for parsing application/json
 app.use(cors()); // Enable CORS
 
+let appliedJobs = [];
+
+router.post('/job-application', async (req, res) => {
+  try {
+    
+    const { email, mobileNumber, resume,job} = req.body;
+    console.log(email)
+
+    // Save job application details to the database or perform any other necessary operations
+    // For this example, we'll just push the details to the appliedJobs array
+    appliedJobs.push({ email, mobileNumber, resume ,job});
+
+    console.log('Job application received:', { email, mobileNumber, resume,job });
+
+    res.status(201).json({ message: 'Job application received successfully' });
+  } catch (error) {
+    console.error('Error submitting job application:', error);
+    res.status(500).json({ message: 'Failed to submit job application. Please try again later.' });
+  }
+});
+
+router.get('/applied-jobs', async (req, res) => {
+  try {
+    res.json(appliedJobs);
+  } catch (error) {
+    console.error('Error fetching applied jobs:', error);
+    res.status(500).json({ message: 'Failed to fetch applied jobs. Please try again later.' });
+  }
+});
+
+// Mount the router at the base path
+app.use('/', router);
 
 const jobs = [
     {

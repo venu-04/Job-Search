@@ -43,7 +43,7 @@ function App() {
         <Route path="/categories" element={<JobCategories />} />
         <Route path="/Dashboard" element={<Dashboard/>} />
         <Route path="/jobdetails/:jobId" element={<Jobdetails jobs={jobs}/>} />
-        <Route path="/JobApplicationForm" element={<JobApplicationForm/>} />
+        <Route path="/JobApplicationForm" element={<JobApplicationForm />} />
         
       
       </Routes>
